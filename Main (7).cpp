@@ -1,36 +1,44 @@
-#include <iostream>
-#include <string>
+ #include <iostream>
 using namespace std;
-class Student {
+// Base class
+class Animal {
 public:
-// Properties (data members)
-string name;
-int rollNumber;
-int age;
-// Function to display student information
-void displayInfo() {
-cout << "Name: " << name << endl;
-cout << "Roll Number: " << rollNumber << endl;
-cout << "Age: " << age << endl;
+// Virtual function for dynamic binding
+virtual void speak() const {
+cout << "Some generic animal sound" << endl;
+}
+// Virtual destructor to ensure proper cleanup of derived objects
+virtual ~Animal() {}
+};
+// Derived class Dog
+class Dog : public Animal {
+public:
+// Override the base class function
+void speak() const override {
+cout << "Woof!" << endl;
 }
 };
-int main() {
-// Create objects (instances) of the Student class
-Student s1;
-Student s2;
-// Set properties for student1
-s1.name = "Saif";
-s1.rollNumber = 34;
-s1.age = 18;
-// Set properties for student2
-s2.name = "omkar";
-s2.rollNumber = 52;
-s2.age = 18;
-// Display information for each student
-cout << "S1 Information:" << endl;
-s1.displayInfo();
-cout << endl; // For better readability
-cout << "S2 Information:" << endl;
-s2.displayInfo();
+// Derived class Cat
+class Cat : public Animal {
+public:
+// Override the base class function
+void speak() const override {
+cout << "Meow!" << endl;
+}
+};
+// Function that takes a pointer to Animal and calls its speak method
+void makeAnimalSpeak(const Animal* animal) {
+animal->speak();
+}
+ int main() {
+// Create instances of Dog and Cat
+Dog myDog;
+Cat myCat;
+// Use pointers to base class
+Animal* animal1 = &myDog;
+Animal* animal2 = &myCat;
+// Call function to make each animal speak
+makeAnimalSpeak(animal1); // Output: Woof!
+makeAnimalSpeak(animal2); // Output: Meow!
 return 0;
 }
